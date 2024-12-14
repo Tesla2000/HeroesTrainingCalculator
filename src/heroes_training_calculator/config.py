@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Type, Optional
+from typing import Optional
+from typing import Type
 
 import toml
 from dotenv import load_dotenv
@@ -9,6 +10,7 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic_core import PydanticUndefined
 
+from .counterstrike_level import CounterstrikeLevel
 from .custom_argument_parser import CustomArgumentParser
 
 load_dotenv()
@@ -18,6 +20,19 @@ class Config(BaseModel):
     _root: Path = Path(__file__).parent
     pos_args: list[str] = Field(default_factory=list)
     config_file: Optional[Path] = None
+    gold: int = 6542 + 52000
+    is_expert_trainer: bool = False
+    counterstrike_level: CounterstrikeLevel = CounterstrikeLevel.EXPERT
+    unit_weights: tuple[float, float, float, float, float, float, float] = (
+        25,
+        400,
+        130,
+        320,
+        100,
+        1700,
+        3500,
+    )
+    isabela_level: int = 1
 
 
 def parse_arguments(config_class: Type[Config]):
@@ -47,13 +62,11 @@ def create_config_with_args(config_class: Type[Config], args) -> Config:
         for name in config_class.model_fields
         if hasattr(args, name) and getattr(args, name) != PydanticUndefined
     }
-    if (
-        arg_dict.get("config_file")
-        and Path(arg_dict["config_file"]).exists()
-    ):
+    if arg_dict.get("config_file") and Path(arg_dict["config_file"]).exists():
         config = config_class(
             **{
-                **arg_dict, **toml.load(arg_dict.get("config_file")),
+                **arg_dict,
+                **toml.load(arg_dict.get("config_file")),
             }
         )
     else:
