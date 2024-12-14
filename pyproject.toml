@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "heroes_training_calculator"
+version = "0.1.0"
+description = "Calculates training costs of Heroes5 units and creates optimal training sets given money, counterstrike, and expert trainer"
+authors = ["Tesla2000 <fratajczak124@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pre-commit = "^3.7.1"
+python-dotenv = "^1.0.1"
+pydantic = "^2.8.2"
+toml = "^0.10.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
