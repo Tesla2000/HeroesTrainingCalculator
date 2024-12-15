@@ -13,6 +13,7 @@ pydantic = "^2.8.2"
 toml = "^0.10.2"
 more-itertools = "^10.5.0"
 numpy = "^2.2.0"
+pulp = "^2.9.0"
 
 
 [build-system]

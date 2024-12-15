@@ -20,7 +20,7 @@ class Config(BaseModel):
     _root: Path = Path(__file__).parent
     pos_args: list[str] = Field(default_factory=list)
     config_file: Optional[Path] = None
-    gold: int = 6542 + 52000
+    gold: int = 542 + 52000
     is_expert_trainer: bool = False
     counterstrike_level: CounterstrikeLevel = CounterstrikeLevel.EXPERT
     unit_weights: tuple[float, float, float, float, float, float, float] = (

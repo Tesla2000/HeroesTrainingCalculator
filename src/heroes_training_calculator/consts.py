@@ -43,6 +43,6 @@ units2buy = np.array(
         product(*tuple(range(tier.n_units_to_recruit + 1) for tier in tiers))
     )
 )
-units2buy_costs = np.sum(
+max_units2buy_cost = np.sum(
     units2buy * np.array(tuple(tier.total_cost for tier in tiers)), axis=1
-)
+).max()
