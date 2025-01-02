@@ -34,7 +34,7 @@ def get_valid_training_configurations(
             ),
         ),
     )
-    training_cost_modifier = _get_training_cost_modifier(config)
+    training_cost_modifier = get_training_cost_modifier(config)
     return tuple(
         filter(
             partial(
@@ -47,7 +47,7 @@ def get_valid_training_configurations(
     )
 
 
-def _get_training_cost_modifier(config: Config) -> float:
+def get_training_cost_modifier(config: Config) -> float:
     return 1 - (
         counterstrike_bonus[config.counterstrike_level]
         + config.is_expert_trainer * expert_trainer_bonus

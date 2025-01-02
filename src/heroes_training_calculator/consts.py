@@ -3,10 +3,8 @@ from __future__ import annotations
 import operator
 from collections.abc import Mapping
 from functools import reduce
-from itertools import product
 from operator import itemgetter
 
-import numpy as np
 from more_itertools import map_reduce
 
 from src.heroes_training_calculator.counterstrike_level import (
@@ -24,6 +22,7 @@ tiers = (
     Tier(Unit.CAVALIER, 1300, 400, 14, 2, None, None),
     Tier(Unit.ANGEL, 2800, 700, 6, 1, None, None),
 )
+trainable_tiers = tuple(tier for tier in tiers if tier.trained_into)
 reduce(operator.mul, (tier.n_units_to_recruit for tier in tiers))
 n_trainings = 20
 n_cavalry_trainings = 4
@@ -38,11 +37,9 @@ counterstrike_bonus = {
     CounterstrikeLevel.ULTIMATE: 0.45,
 }
 isabela_bonus_per_lvl = 0.02
-units2buy = np.array(
-    tuple(
-        product(*tuple(range(tier.n_units_to_recruit + 1) for tier in tiers))
-    )
+untrainable_cost = sum(
+    tier.n_units * tier.update_cost
+    for tier in tiers
+    if tier.trained_into is None
 )
-max_units2buy_cost = np.sum(
-    units2buy * np.array(tuple(tier.total_cost for tier in tiers)), axis=1
-).max()
+trainable_indexes = [0, 1, 2, 4]

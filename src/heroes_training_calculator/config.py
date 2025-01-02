@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
 from typing import Optional
 from typing import Type
 
@@ -21,48 +20,48 @@ class Config(BaseModel):
     _root: Path = Path(__file__).parent
     pos_args: list[str] = Field(default_factory=list)
     config_file: Optional[Path] = None
-    gold: int = Field(alias="złoto")
-    is_expert_trainer: bool = Field(alias="eksperski_trening")
-    counterstrike_level: CounterstrikeLevel = Field(alias="kontratak")
+    gold: int = 54542
+    is_expert_trainer: bool = True
+    counterstrike_level: CounterstrikeLevel = CounterstrikeLevel.ADVANCED
     unit_weights: tuple[float, float, float, float, float, float, float] = (
-        25,
-        400,
-        130,
-        320,
-        100,
-        1700,
-        3500,
+        1,
+        5,
+        10,
+        10,
+        5,
+        30,
+        50,
     )
     isabela_level: int = 1
 
-    def __init__(self, /, **data: Any):
-        expert_trainer = data.get(
-            "eksperski_trening", data.get("is_expert_trainer")
-        ).lower()
-        if expert_trainer in (
-            "t",
-            "tak",
-            "jest",
-            "owszem",
-            "zaiste",
-            "pewnie",
-            "no_raczej",
-            "tak_jak_pan_jezus_powiedział",
-        ):
-            data["is_expert_trainer"] = True
-            data["eksperski_trening"] = True
-        elif expert_trainer in (
-            "n",
-            "nie",
-            "absolutnie",
-            "skądże",
-            "bynajmniej",
-            "a_gdzie_tam",
-            "uchowaj_boże",
-        ):
-            data["is_expert_trainer"] = False
-            data["eksperski_trening"] = False
-        super().__init__(**data)
+    # def __init__(self, /, **data: Any):
+    #     expert_trainer = data.get(
+    #         "eksperski_trening", data.get("is_expert_trainer")
+    #     ).lower()
+    #     if expert_trainer in (
+    #         "t",
+    #         "tak",
+    #         "jest",
+    #         "owszem",
+    #         "zaiste",
+    #         "pewnie",
+    #         "no_raczej",
+    #         "tak_jak_pan_jezus_powiedział",
+    #     ):
+    #         data["is_expert_trainer"] = True
+    #         data["eksperski_trening"] = True
+    #     elif expert_trainer in (
+    #         "n",
+    #         "nie",
+    #         "absolutnie",
+    #         "skądże",
+    #         "bynajmniej",
+    #         "a_gdzie_tam",
+    #         "uchowaj_boże",
+    #     ):
+    #         data["is_expert_trainer"] = False
+    #         data["eksperski_trening"] = False
+    #     super().__init__(**data)
 
 
 def parse_arguments(config_class: Type[Config]):

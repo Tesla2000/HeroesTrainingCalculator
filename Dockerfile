@@ -32,4 +32,4 @@ RUN poetry install --only main --no-root --no-interaction
 COPY . /code
 
 # Run the application
-CMD ["poetry", "run", "python", "main.py"]
+CMD ["poetry", "run", "python", "discord_endpoint.py"]
